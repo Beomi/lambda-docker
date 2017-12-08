@@ -16,12 +16,10 @@ dev_install () {
 pip_rasterio () {
     cd /home/
     rm -rf env
-    virtualenv env --python=python3
-    unset PYTHONPATH
+    python3 -m virtualenv env --python=python3
     source env/bin/activate
     pip install -U pip wheel
-    pip install -U requests
-    pip install google -U
+    #pip install google -U
     pip install --use-wheel numpy -U
     pip install --use-wheel tensorflow -U
     deactivate
@@ -33,7 +31,7 @@ gather_pack () {
     cd /home/
     source env/bin/activate
 
-    rm -r lambdapack
+    rm -rf lambdapack
     mkdir lambdapack
     cd lambdapack
 
@@ -43,7 +41,7 @@ gather_pack () {
     echo "original size $(du -sh /home/lambdapack | cut -f1)"
 
     # cleaning libs
-    rm -r external
+    rm -rf external
     find . -type d -name "tests" -exec rm -rf {} +
 
     # cleaning

@@ -120,7 +120,7 @@ def handler(event, context):
 
     downloadFromURL(
         url='http://download.tensorflow.org/models/image/imagenet/inception-2015-12-05.tgz',
-        filename='/tmp/imagenet/inception-2015-12-05.tgz'
+        local_path='/tmp/imagenet/inception-2015-12-05.tgz'
     )
 
     file = tarfile.open('/tmp/imagenet/inception-2015-12-05.tgz', 'r:gz')

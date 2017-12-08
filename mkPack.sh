@@ -1,2 +1,2 @@
-docker exec -i -t lambdapackgen /bin/bash /outputs/buildPack.sh
+docker exec -it lambdapack /bin/bash /outputs/buildPack.sh
 
