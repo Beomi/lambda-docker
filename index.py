@@ -9,19 +9,13 @@ import tarfile
 import re
 import sys
 import urllib.request, urllib.parse, urllib.error
-import requests
 
 def downloadFromS3(strBucket,strKey,strFile):
     s3_client = boto3.client('s3')
     s3_client.download_file(strBucket, strKey, strFile)
 
-def downloadFromURL(url, filename):
-    res = requests.get(url, stream=True)
-    f = open(filename, 'wb')
-    for chunk in res.iter_content(chunk_size=1024):
-        if chunk:
-            f.write(chunk)
-    f.close()
+def downloadFromURL(url, local_path):
+    urllib.request.urlretrieve(url, local_path)
 
 class NodeLookup(object):
     """Converts integer node ID's to human readable labels."""
@@ -129,12 +123,8 @@ def handler(event, context):
         filename='/tmp/imagenet/inception-2015-12-05.tgz'
     )
 
-    os.system('chmod -R 777 /tmp')
-
     file = tarfile.open('/tmp/imagenet/inception-2015-12-05.tgz', 'r:gz')
-    file.extractall()
-
-    os.system('chmod -R 777 /tmp')
+    file.extractall('/tmp/imagenet/')
 
     if ('imagelink' in event):
         urllib.request.urlretrieve(event['imagelink'], '/tmp/imagenet/inputimage.jpg')
